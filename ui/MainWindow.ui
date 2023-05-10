@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>911</width>
+    <height>395</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>10</y>
+      <width>891</width>
+      <height>421</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="ButtonsLayout">
+     <item>
+      <layout class="QVBoxLayout" name="SourcePathLayout">
+       <item>
+        <widget class="QLabel" name="SourcePathLabel">
+         <property name="text">
+          <string>Введите путь до фото/видео</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="InnerPathLayout">
+         <item>
+          <widget class="QLineEdit" name="SourcePathLineEdit"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="SourcePathButton">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="text">
+            <string>Обзор...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="WeightPathLayout">
+       <item>
+        <widget class="QLabel" name="WeightPathLabel">
+         <property name="text">
+          <string>Введите путь к файлу предобученных весов нейронной сети архитектуры YOLOv7 (*.pt)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="InnerWeightPathLayout">
+         <item>
+          <widget class="QLineEdit" name="WeightPathLineEdit"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="WeightPathPushButton">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="text">
+            <string>Обзор...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="ThresholdLayout">
+       <item>
+        <widget class="QLabel" name="ThresholdLabel">
+         <property name="text">
+          <string>Введите порог точности для нахождения объектов (число от 0 до 1):</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="ThresholdLineEdit">
+         <property name="text">
+          <string>0.75</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="ThresholdSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="FunctionsLayout">
+       <item>
+        <layout class="QHBoxLayout" name="InnerFunctionsLayout">
+         <item>
+          <widget class="QPushButton" name="DetectObjectsButton">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="text">
+            <string>Выделить объекты ограничительными рамками</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Info:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTextEdit" name="DetectionOutputTextEdit">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
