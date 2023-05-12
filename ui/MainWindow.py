@@ -8,10 +8,6 @@ from PyQt5.QtGui import QIcon, QRegExpValidator, QTextCursor
 from PyQt5.QtCore import QRegExp, QProcess, QByteArray
 
 
-class YOLOv7Detector:
-    pass
-
-
 class MainWindowModel:
     def __init__(self):
         self.window_title = "GUI YOLOv7 Object Detector"
