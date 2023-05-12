@@ -1,13 +1,13 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication
-from ui.MainWindow import MainWindow
+from ui.MainWindow import MainWindowView
 
 
 class App(QApplication):
     def __init__(self, sys_argv):
         super(App, self).__init__(sys_argv)
-        self.main_window = MainWindow()
+        self.main_window = MainWindowView()
         self.main_window.show()
 
 
