@@ -1,0 +1,8 @@
+# Usage: pip install -r requirements_GPU.txt
+
+-i https://download.pytorch.org/whl/cu113
+
+# additional for requirements_CPU.txt file --- CUDA 11.3 for GPU usage
+
+torch==1.11.0+cu113
+torchvision==0.12.0+cu113
