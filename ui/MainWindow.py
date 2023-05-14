@@ -13,7 +13,20 @@ class MainWindowModel:
         self.window_title = "GUI YOLOv7 Object Detector"
         self.ui_path = "ui/MainWindow.ui"
         self.window_icon_path = "icons/logo.png"
+        self.source_base_path = "data/example.jpg"
+        self.weight_base_path = "weights/yolov7_x_640_sgd_best.pt"
         self.REG_FLOATS_ONLY = r'[0-9].+'
+        self.weight_path_dialog_txt = "Выберите файл нейросетевых весов"
+        self.weight_extensions_dialog_txt = "PyTorch weights (*.pt)"
+        self.source_path_dialog_txt = "Выберите файл с входными данными"
+        self.source_extenstions_dialog_txt = "Source file (*.jpg *.jpeg *.png *.avi *mp4)"
+        self.save_path_dialog_txt = "Выберите каталог для сохранения результатов детектирования"
+        self.edit_path_base_txt = "Выберите путь, нажав клавишу 'Обзор...'"
+
+        self.detection_start_msg = "Процесс детектирования начат. Ожидайте результатов!\n"
+
+        # Error messages
+        self.unicode_err_msg = "Произошла ошибка! Проверьте правильность входных данных"
 
 
 class MainWindowController:
@@ -44,21 +57,20 @@ class MainWindowController:
         self.threshold_edit: QLineEdit = self.main_window.findChild(QLineEdit, "ThresholdLineEdit")
         self.detection_output_edit: QTextEdit = self.main_window.findChild(QTextEdit, "DetectionOutputTextEdit")
 
-    @staticmethod
-    def init_gui_pathes(gui_paths: dict):
+    def init_gui_pathes(self, gui_paths: dict):
         for edit, base_path in gui_paths.items():
             path = os.path.join(os.getcwd(), base_path).replace('\\', '/')
             if os.path.isfile(path):
                 edit.setText(path)
                 continue
-            edit.setText("Выберите путь, нажав клавишу 'Обзор...'")
+            edit.setText(self.main_model.edit_path_base_txt)
 
     def weight_button_clicked(self):
         file_path = str(
             QFileDialog.getOpenFileName(self.main_window,
-                                        "Выберите файл нейросетевых весов",
+                                        self.main_model.weight_path_dialog_txt,
                                         os.getcwd(),
-                                        "PyTorch weights (*.pt)")[0]
+                                        self.main_model.weight_extensions_dialog_txt)[0]
         )
         if not os.path.exists(file_path):
             return
@@ -67,9 +79,9 @@ class MainWindowController:
     def source_button_clicked(self):
         file_path = str(
             QFileDialog.getOpenFileName(self.main_window,
-                                        "Выберите файл с входными данными",
+                                        self.main_model.source_path_dialog_txt,
                                         os.getcwd(),
-                                        "Source file (*.jpg *.jpeg *.png *.avi *mp4)")[0]
+                                        self.main_model.source_extenstions_dialog_txt)[0]
         )
         if not os.path.exists(file_path):
             return
@@ -77,13 +89,13 @@ class MainWindowController:
 
     def detect_objects(self):
         file_path = QFileDialog.getExistingDirectory(self.main_window,
-                                                     "Выберите каталог для сохранения результатов детектирования",
+                                                     self.main_model.save_path_dialog_txt,
                                                      os.getcwd()
                                                      )
         if not file_path:
             return
 
-        # variables initalization for next usage
+        # variables initialization for next usage
         weight_path = self.weight_edit.text()
         source_path = self.source_path_edit.text()
         project_path = weight_path[weight_path.rfind('/') + 1: weight_path.rfind('.pt')]
@@ -107,7 +119,7 @@ class MainWindowController:
             output_bytes: QByteArray = self.yolo_process.readAll()
             output_string: str = bytes(output_bytes).decode()
         except UnicodeDecodeError:
-            self.detection_output_edit.setText("Произошла ошибка! Проверьте правильность входных данных")
+            self.detection_output_edit.setText(self.main_model.unicode_err_msg)
             return
         cursor: QTextCursor = QTextCursor(self.detection_output_edit.document())
         cursor.movePosition(QTextCursor.End)
@@ -117,8 +129,8 @@ class MainWindowController:
         )
 
     def detection_output_clear(self):
-        # Clean old text and set new text
-        self.detection_output_edit.setText("Процесс детектирования начат. Ожидайте результатов!\n")
+        # Clean old text and set new start text
+        self.detection_output_edit.setText(self.main_model.detection_start_msg)
 
 
 class MainWindowView(QMainWindow):
@@ -148,8 +160,8 @@ class MainWindowView(QMainWindow):
         # Update UI with base  pathes
         self.controller.init_gui_pathes(
             {
-                self.source_path_edit: "data/example.jpg",
-                self.weight_edit: "weights/yolov7_x_640_sgd_best.pt"
+                self.source_path_edit: self.model.source_base_path,
+                self.weight_edit: self.model.weight_base_path
             }
         )
 
