@@ -134,7 +134,6 @@ class MainWindowController:
 
 
 class MainWindowView(QMainWindow):
-
     def __init__(self):
         super(MainWindowView, self).__init__()
         self.model = MainWindowModel()
@@ -168,7 +167,9 @@ class MainWindowView(QMainWindow):
         # set limits for line edits
         validator = QRegExpValidator(QRegExp(self.model.REG_FLOATS_ONLY))
         self.threshold_edit.setValidator(validator)
+        self.clicked_action_connect()
 
+    def clicked_action_connect(self):
         # Connect listeners to buttons
         self.weight_button.clicked.connect(self.controller.weight_button_clicked)
         self.source_path_button.clicked.connect(self.controller.source_button_clicked)
